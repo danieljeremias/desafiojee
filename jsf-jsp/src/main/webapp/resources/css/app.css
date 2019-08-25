@@ -1,0 +1,40 @@
+* {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+#header {
+	background: #007ad9;
+	padding: 15px;
+	border-bottom: 3px solid #e02365;
+}
+
+#menu {
+	margin-top: 12px;
+}
+
+#footer {
+	display: none;
+	background: #fafafd;
+	padding: 10px;
+	background: #fafafd;
+}
+
+.square {
+	color: #fff;
+	height: 50px;
+	width: 50px;
+}
+
+.pull-left {
+	text-align: left;
+}
+
+.pull-center {
+	text-align: center;
+}
+
+.pull-right {
+	text-align: right;
+}

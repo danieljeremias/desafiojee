@@ -1,0 +1,56 @@
+<ui:composition template="/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="content">
+		<h:form id="form" prependId="false">
+			<p:toolbar>
+				<f:facet name="left">
+					<p:outputLabel
+						value="Manutenção de Carros (#{carroBean.editionMode ? 'Editando' : 'Inserindo'})" />
+				</f:facet>
+				<f:facet name="right">
+					<p:commandButton value="Voltar" title="Voltar"
+						icon="pi pi-arrow-left"
+						action="listar-carros.jsf?faces-redirect=true" ajax="false"
+						immediate="true" />
+					<p:commandButton value="Salvar" title="Salvar" icon="pi pi-save"
+						action="#{carroBean.salvar()}" ajax="false" />
+				</f:facet>
+			</p:toolbar>
+			<p:panel>
+				<p:focus context="panel" />
+				<p:panelGrid id="panel" columns="4"
+					columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4,ui-g-12 ui-md-2,ui-g-12 ui-md-4"
+					layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel for="year" value="Ano" />
+					<p:inputMask id="year" maxlength="4" mask="9999" required="true"
+						value="#{carroBean.model.ano}" />
+
+					<p:outputLabel for="brand" value="Marca" />
+					<p:inputText id="brand" required="true"
+						value="#{carroBean.model.marca}" />
+
+					<p:outputLabel for="color" value="Cor" />
+					<p:colorPicker id="color" value="#{carroBean.model.cor}" />
+
+					<p:outputLabel for="price" value="Preço" />
+					<p:inputNumber id="price" symbol=" R$" symbolPosition="s"
+						decimalSeparator="," thousandSeparator="." required="true"
+						value="#{carroBean.model.preco}" />
+
+					<p:outputLabel for="soldState" value="Vendido?" />
+					<p:selectBooleanButton id="soldState" onLabel="Yes" offLabel="No"
+						onIcon="pi pi-check" offIcon="pi pi-times"
+						value="#{carroBean.model.vendido}" />
+
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

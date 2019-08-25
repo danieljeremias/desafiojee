@@ -1,0 +1,104 @@
+<ui:composition template="/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="content">
+		<h:form id="form" prependId="false">
+			<p:toolbar>
+				<f:facet name="left">
+					<p:outputLabel value="Listagem de Carros" />
+				</f:facet>
+				<f:facet name="right">
+					<p:commandButton value="Novo" title="Novo" icon="pi pi-plus"
+						action="manter-carros.jsf?faces-redirect=true" ajax="false"
+						immediate="true" />
+				</f:facet>
+			</p:toolbar>
+			<p:panel>
+				<h:panelGroup id="listagem" layout="block">
+					<p:dataTable id="carroDetail" var="carro"
+						value="#{carroBean.carros}" rows="5" paginator="true"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,15"
+						emptyMessage="Nenhum registro encontrado.">
+
+						<p:column headerText="Id" sortBy="#{carro.id}">
+							<h:outputText value="#{carro.id}" />
+						</p:column>
+
+						<p:column headerText="Ano" sortBy="#{carro.ano}">
+							<h:outputText value="#{carro.ano}" />
+						</p:column>
+
+						<p:column headerText="Marca" sortBy="#{carro.marca}">
+							<h:outputText value="#{carro.marca}" />
+						</p:column>
+
+						<p:column headerText="Preço" sortBy="#{carro.preco}">
+							<h:outputText value="R$ #{carro.preco}" />
+						</p:column>
+
+						<p:column headerText="Vendido" sortBy="#{carro.vendido}"
+							styleClass="pull-center">
+							<p:toggleSwitch value="#{carro.vendido}" disabled="true" />
+						</p:column>
+
+
+						<p:column headerText="Ações" style="width: 100px;"
+							styleClass="pull-center">
+							<p:commandButton update=":form:carroDetailView"
+								oncomplete="PF('carroDialog').show()" icon="pi pi-search"
+								title="Visualizar">
+								<f:setPropertyActionListener value="#{carro}"
+									target="#{carroBean.model}" />
+							</p:commandButton>
+							<p:commandButton icon="pi pi-pencil" title="Editar"
+								action="#{carroBean.editar(carro)}" ajax="false" />
+							<p:commandButton icon="pi pi-trash" title="Excluir"
+								action="#{carroBean.remover(carro)}" update="messages,listagem">
+								<p:confirm header="Confirmação"
+									message="#{msg.confirmar_exclusao}"
+									icon="pi pi-exclamation-triangle" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+
+				<p:dialog header="Informações do Carro" widgetVar="carroDialog"
+					modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+					<p:outputPanel id="carroDetailView" style="text-align: center;">
+						<p:panelGrid columns="2" rendered="#{not empty carroBean.model}"
+							columnClasses="label,value">
+
+							<h:outputText value="Id:" />
+							<h:outputText value="#{carroBean.model.id}" />
+
+							<h:outputText value="Ano" />
+							<h:outputText value="#{carroBean.model.ano}" />
+
+							<h:outputText value="Cor:" />
+							<h:outputText value="-----" styleClass="square"
+								style="background-color: ##{carroBean.model.cor}" />
+
+							<h:outputText value="Preço" />
+							<h:outputText value="R$ #{carroBean.model.preco}" />
+						</p:panelGrid>
+					</p:outputPanel>
+				</p:dialog>
+
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+				</p:confirmDialog>
+
+			</p:panel>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

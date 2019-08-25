@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition>
+		<div class="ui-g-6 ui-md-6 pull-left">
+			<h:outputLink title="Home"
+				value="#{facesContext.externalContext.request.contextPath}/pages/principal.jsf">
+				<h:graphicImage library="images" name="logo.png" width="100"
+					height="40" />
+			</h:outputLink>
+		</div>
+		<div class="ui-g-6 ui-md-6 pull-right">
+			<h:form>
+				<p:themeSwitcher id="theme-switcher" style="width: 165px;">
+					<f:selectItem itemLabel="Escolher Tema" itemValue="" />
+					<f:selectItems value="#{themeSwitcherBean.themes}" var="tema"
+						itemLabel="#{tema.displayName}" itemValue="#{tema.name}" />
+				</p:themeSwitcher>
+			</h:form>
+		</div>
+	</ui:composition>
+</h:body>
+</html>

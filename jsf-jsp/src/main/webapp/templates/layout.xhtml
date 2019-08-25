@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view encoding="UTF-8" locale="pt_BR">
+
+	<h:head>
+		<ui:insert name="baseurl" />
+		<f:loadBundle basename="labels" var="lbl" />
+		<f:loadBundle basename="mensagens" var="msg" />
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta http-equiv="X-UA-Compatible" content="IE=9" />
+		<h:outputStylesheet name="app.css" library="css" />
+		<title><h:outputText value="#{lbl.titulo}" /></title>
+	</h:head>
+
+	<h:body>
+
+		<div id="page" class="ui-g">
+
+			<div id="header" class="ui-g-12 ui-md-12">
+				<ui:insert name="header">
+					<ui:include src="/templates/header.xhtml" />
+				</ui:insert>
+			</div>
+
+			<div id="menu" class="ui-g-12 ui-md-2">
+				<h:form>
+					<p:panelMenu>
+						<p:submenu label="Carros" icon="pi pi-home">
+							<p:menuitem value="Listar"
+								url="#{facesContext.externalContext.request.contextPath}/pages/carros/listar-carros.jsf"
+								icon="pi pi-list" />
+							<p:menuitem value="Novo"
+								url="#{facesContext.externalContext.request.contextPath}/pages/carros/manter-carros.jsf"
+								icon="pi pi-plus" />
+						</p:submenu>
+						<p:submenu label="Usuários" icon="pi pi-home">
+							<p:menuitem value="Listar"
+								url="#{facesContext.externalContext.request.contextPath}/pages/usuarios/listar-usuarios.jsf"
+								icon="pi pi-list" />
+							<p:menuitem value="Novo"
+								url="#{facesContext.externalContext.request.contextPath}/pages/usuarios/manter-usuarios.jsf"
+								icon="pi pi-plus" />
+						</p:submenu>
+					</p:panelMenu>
+				</h:form>
+			</div>
+
+			<div id="content" class="ui-g-12 ui-md-10 ui-g-nopad">
+				<div class="ui-g-12">
+					<p:messages id="messages" showSummary="true" closable="true">
+						<p:autoUpdate />
+					</p:messages>
+					<ui:insert name="content">Put default content here, if any.</ui:insert>
+				</div>
+			</div>
+
+			<div id="footer" class="ui-g-12">
+				<ui:insert name="footer">
+					<ui:include src="/templates/footer.xhtml" />
+				</ui:insert>
+			</div>
+
+		</div>
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/loading2.gif" height="100" width="100" />
+		</p:dialog>
+
+		<h:outputScript name="app.js" library="js" />
+
+		<ui:debug hotkey="k"
+			rendered="#{facesContext.application.projectStage == 'Development'}" />
+
+	</h:body>
+</f:view>
+</html>

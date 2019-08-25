@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">   
+	window.location = '/desafio/pages/principal.jsf' + getURLParameters();
+    function getURLParameters() {
+        var token = window.location.search.substring(1);
+        if (token == 'undefined' || token == '') {
+            token = '';
+        } else {
+           	token = '?' + token;
+        }
+        return token;
+    }
+</script>
+</head>
+<body>
