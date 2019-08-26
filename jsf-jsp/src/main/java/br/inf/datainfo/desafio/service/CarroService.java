@@ -2,31 +2,48 @@ package br.inf.datainfo.desafio.service;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
+import javax.annotation.Resource;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 import javax.validation.constraints.NotNull;
 
 import br.inf.datainfo.desafio.entities.Carro;
 
-@Stateless
+@ApplicationScoped
 public class CarroService {
 
 	@PersistenceContext
 	private EntityManager em;
 
+	@Resource
+	private UserTransaction userTransaction;
+
 	public Carro salvar(@NotNull Carro carro) {
-		if (carro.getId() == null) {
-			em.persist(carro);
-		} else {
-			em.merge(carro);
+		try {
+			userTransaction.begin();
+			if (carro.getId() == null) {
+				em.persist(carro);
+			} else {
+				em.merge(carro);
+			}
+			em.flush();
+			userTransaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		em.flush();
 		return carro;
 	}
 
 	public void remover(@NotNull Carro carro) {
-		em.remove(em.find(Carro.class, carro.getId()));
+		try {
+			userTransaction.begin();
+			em.remove(em.find(Carro.class, carro.getId()));
+			userTransaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Carro getById(@NotNull Integer id) {
